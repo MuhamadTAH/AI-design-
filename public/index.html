@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design System - Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+      background: #ffffff;
+      color: #333;
+    }
+
+    /* Main Container */
+    .container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      background: white;
+    }
+
+    /* ========== HEADER BAR ========== */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      height: 60px;
+      border-bottom: 1px solid #e5e5e5;
+      background: white;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 28px;
+      height: 28px;
+      background: #d4594c;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .header-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-primary {
+      padding: 8px 16px;
+      background: #d4594c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .btn-primary:hover {
+      background: #c94a3f;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #d4594c;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    .toggle-switch {
+      width: 40px;
+      height: 24px;
+      background: #e5e5e5;
+      border-radius: 12px;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.3s;
+    }
+
+    .toggle-switch.active {
+      background: #d4594c;
+    }
+
+    .toggle-dot {
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: left 0.3s;
+    }
+
+    .toggle-switch.active .toggle-dot {
+      left: 18px;
+    }
+
+    .close-icon {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      color: #999;
+    }
+
+    .close-icon:hover {
+      color: #333;
+    }
+
+    /* ========== MAIN CONTENT AREA ========== */
+    .main-content {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ========== LEFT PANEL - CHAT ========== */
+    .left-panel {
+      width: 35%;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #e5e5e5;
+      background: white;
+    }
+
+    .panel-tabs {
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      border-bottom: 1px solid #e5e5e5;
+      gap: 20px;
+      height: 50px;
+    }
+
+    .tab {
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: #999;
+      position: relative;
+      padding-bottom: 10px;
+      transition: color 0.3s;
+    }
+
+    .tab.active {
+      color: #333;
+    }
+
+    .tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #d4594c;
+    }
+
+    .tab-new-btn {
+      margin-left: auto;
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 18px;
+      color: #d4594c;
+    }
+
+    /* Chat Messages Area */
+    .chat-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .message-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .message-label {
+      font-weight: 600;
+      font-size: 12px;
+      color: #999;
+      text-transform: uppercase;
+    }
+
+    .message-bubble {
+      padding: 12px 16px;
+      background: #f0f0f0;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.5;
+      word-wrap: break-word;
+    }
+
+    .message-bubble.user {
+      background: #d4594c;
+      color: white;
+      align-self: flex-end;
+      max-width: 80%;
+    }
+
+    .ai-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      background: #f9f9f9;
+      border-radius: 8px;
+    }
+
+    .ai-icon {
+      width: 24px;
+      height: 24px;
+      background: #d4594c;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    .ai-status-text {
+      font-size: 14px;
+      color: #666;
+    }
+
+    /* Input Area */
+    .input-section {
+      padding: 16px 20px;
+      border-top: 1px solid #e5e5e5;
+    }
+
+    .input-box {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      resize: none;
+      min-height: 80px;
+      margin-bottom: 12px;
+    }
+
+    .input-box:focus {
+      outline: none;
+      border-color: #d4594c;
+      box-shadow: 0 0 0 2px rgba(212, 89, 76, 0.1);
+    }
+
+    .input-box::placeholder {
+      color: #999;
+    }
+
+    .action-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .action-icon-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    .action-icon {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: #f5f5f5;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #666;
+      transition: all 0.2s;
+    }
+
+    .action-icon:hover {
+      background: #e5e5e5;
+      color: #333;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-btn {
+      padding: 8px 12px;
+      border: none;
+      background: #f5f5f5;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      color: #666;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      background: #e5e5e5;
+      color: #333;
+    }
+
+    .action-btn.primary {
+      background: #d4594c;
+      color: white;
+    }
+
+    .action-btn.primary:hover {
+      background: #c94a3f;
+    }
+
+    /* ========== RIGHT PANEL - PREVIEW ========== */
+    .right-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: white;
+    }
+
+    .right-panel-tabs {
+      display: flex;
+      gap: 0;
+      padding: 0 20px;
+      border-bottom: 1px solid #e5e5e5;
+      height: 50px;
+      align-items: center;
+    }
+
+    .right-tab {
+      cursor: pointer;
+      padding: 0 16px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #999;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .right-tab.active {
+      color: #333;
+    }
+
+    .right-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #d4594c;
+    }
+
+    .right-tab-icon {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+      display: inline-block;
+    }
+
+    /* Preview Content Area */
+    .preview-content {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .preview-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .preview-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .preview-subtitle {
+      font-size: 14px;
+      color: #999;
+    }
+
+    .progress-bar {
+      width: 200px;
+      height: 4px;
+      background: #e5e5e5;
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 20px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #d4594c;
+      width: 30%;
+      animation: progress 2s ease-in-out infinite;
+    }
+
+    @keyframes progress {
+      0% { width: 10%; }
+      50% { width: 70%; }
+      100% { width: 30%; }
+    }
+
+    .preview-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: none;
+    }
+
+    .preview-iframe.active {
+      display: block;
+    }
+
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f5f5f5;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #d0d0d0;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #b0b0b0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- HEADER BAR -->
+    <div class="header">
+      <div class="header-left">
+        <div class="logo-icon">🎨</div>
+        <span class="header-title">Design System</span>
+      </div>
+      <div class="header-right">
+        <button class="btn-primary" id="shareBtn">Share</button>
+        <div class="avatar">N</div>
+        <div class="toggle-switch" id="toggleSwitch">
+          <div class="toggle-dot"></div>
+        </div>
+        <div class="close-icon" id="closeBtn">✕</div>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <!-- LEFT PANEL -->
+      <div class="left-panel">
+        <!-- Tabs -->
+        <div class="panel-tabs">
+          <div class="tab active" id="chatTab">Chat</div>
+          <div class="tab" id="commentsTab">Comments</div>
+          <button class="tab-new-btn" id="newThreadBtn">+</button>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="chat-area" id="chatArea">
+          <div class="message-group">
+            <div class="message-label">You</div>
+            <div class="message-bubble user">Create design system</div>
+          </div>
+          <div class="message-group">
+            <div class="ai-status">
+              <div class="ai-icon">❄️</div>
+              <div class="ai-status-text">Scrambling...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+          <textarea class="input-box" id="messageInput" placeholder="Describe what you want to create..."></textarea>
+          <div class="action-row">
+            <div class="action-icon-group">
+              <button class="action-icon" title="Settings">⚙️</button>
+              <button class="action-icon" title="Attach">📎</button>
+              <button class="action-icon" title="Microphone">🎤</button>
+            </div>
+            <div class="action-buttons">
+              <button class="action-btn" title="Import">📥</button>
+              <button class="action-btn primary" id="sendBtn" title="Send">▶</button>
+              <button class="action-btn" title="Stop">⏹</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT PANEL -->
+      <div class="right-panel">
+        <!-- Tabs -->
+        <div class="right-panel-tabs">
+          <div class="right-tab active" id="designTab">
+            <span class="right-tab-icon">🎨</span>Design System
+          </div>
+          <div class="right-tab" id="filesTab">
+            <span class="right-tab-icon">📁</span>Design Files
+          </div>
+        </div>
+
+        <!-- Preview Content -->
+        <div class="preview-content" id="previewContent">
+          <div class="preview-placeholder">
+            <div class="preview-title">Creating your design system.</div>
+            <div class="preview-subtitle">Keep this tab open and come back in 5 minutes</div>
+            <div class="progress-bar">
+              <div class="progress-fill"></div>
+            </div>
+          </div>
+          <iframe class="preview-iframe" id="previewFrame"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    console.log('✅ Dashboard loaded');
+    
+    let conversationId = localStorage.getItem('conversationId');
+    let isSending = false;
+
+    // Tab switching
+    document.getElementById('chatTab').addEventListener('click', function() {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+
+    document.getElementById('commentsTab').addEventListener('click', function() {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+
+    // Toggle switch
+    document.getElementById('toggleSwitch').addEventListener('click', function() {
+      this.classList.toggle('active');
+    });
+
+    // Close button
+    document.getElementById('closeBtn').addEventListener('click', function() {
+      if (confirm('Close dashboard?')) {
+        window.close();
+      }
+    });
+
+    // Right panel tabs
+    document.getElementById('designTab').addEventListener('click', function() {
+      document.querySelectorAll('.right-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+
+    document.getElementById('filesTab').addEventListener('click', function() {
+      document.querySelectorAll('.right-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+
+    // New thread button
+    document.getElementById('newThreadBtn').addEventListener('click', function() {
+      console.log('New thread clicked');
+    });
+
+    // Add message to chat
+    function addMessage(sender, text, isStatus = false) {
+      const chatArea = document.getElementById('chatArea');
+      const group = document.createElement('div');
+      group.className = 'message-group';
+
+      if (isStatus) {
+        group.innerHTML = `
+          <div class="ai-status">
+            <div class="ai-icon">❄️</div>
+            <div class="ai-status-text">${text}</div>
+          </div>
+        `;
+      } else {
+        group.innerHTML = `
+          <div class="message-label">${sender}</div>
+          <div class="message-bubble ${sender === 'You' ? 'user' : ''}">${text}</div>
+        `;
+      }
+
+      chatArea.appendChild(group);
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    // Send message
+    async function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const text = input.value.trim();
+      
+      if (!text || isSending) return;
+
+      isSending = true;
+      const btn = document.getElementById('sendBtn');
+      btn.disabled = true;
+
+      try {
+        console.log('📤 Sending:', text);
+        addMessage('You', text);
+        input.value = '';
+
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: text,
+            conversationId: conversationId
+          })
+        });
+
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        const data = await response.json();
+        console.log('✅ Response:', data);
+
+        if (!conversationId && data.conversationId) {
+          conversationId = data.conversationId;
+          localStorage.setItem('conversationId', conversationId);
+        }
+
+        // Show saved file (preview in right panel, not chat)
+        if (data.savedFiles && data.savedFiles.length > 0) {
+          const file = data.savedFiles[0];
+          
+          // Show preview in right panel only
+          const preview = document.getElementById('previewFrame');
+          preview.src = file.url;
+          preview.classList.add('active');
+          
+          // Hide placeholder
+          const placeholder = document.querySelector('.preview-placeholder');
+          placeholder.style.display = 'none';
+          
+          // Show only a confirmation in chat (no AI response text)
+          addMessage('AI', `✓ Design created and saved: ${file.filename}`, true);
+        } else if (data.response) {
+          // No design saved - just show AI response in chat
+          addMessage('AI', data.response);
+        }
+
+      } catch (err) {
+        console.error('❌ Error:', err);
+        addMessage('Error', err.message);
+      } finally {
+        isSending = false;
+        btn.disabled = false;
+      }
+    }
+
+    // Event listeners
+    document.getElementById('sendBtn').addEventListener('click', sendMessage);
+    document.getElementById('messageInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    // Share button
+    document.getElementById('shareBtn').addEventListener('click', function() {
+      alert(`Share link: ${window.location.href}?conv=${conversationId}`);
+    });
+
+    document.getElementById('messageInput').focus();
+  </script>
+</body>
+</html>
