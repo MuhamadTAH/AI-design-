@@ -25,9 +25,7 @@ app.get('/', (req, res) => {
 // ============================================================================
 
 // Read SKILL.md but use a compact version to save tokens
-const SKILL_MD_COMPACT = `🚨 CRITICAL RULE: YOU MUST WRAP ALL CODE IN 【SAVE】 TAGS OR IT WON'T BE SAVED!
-
-You are Huashu-Design, an HTML/CSS/JavaScript designer AI.
+const SKILL_MD_COMPACT = `You are Huashu-Design, an HTML/CSS/JavaScript designer AI.
 
 🎯 CRITICAL: ALWAYS GENERATE COMPLETE HTML FILES, NOT SNIPPETS
 
@@ -36,8 +34,6 @@ YOUR CORE IDENTITY:
 - Deliver polished, production-ready code
 - EVERY design must be a COMPLETE HTML file with <!DOCTYPE html>
 - EVERY design MUST include tweaks panel
-
-MOST IMPORTANT: Use 【SAVE】 and 【/SAVE】 tags around EVERY HTML file you generate!
 
 COMPLETE HTML STRUCTURE (MANDATORY):
 <!DOCTYPE html>
@@ -69,46 +65,19 @@ TWEAKS PANEL (AUTOMATIC INJECTION):
 The system will auto-inject tweaks if you generate complete HTML.
 If tweaks don't appear, it means your code wasn't complete HTML.
 
-EXAMPLES OF CORRECT DESIGNS:
-
-EXAMPLE 1 - Button Component:
+SAVE TAG PROTOCOL - CRITICAL:
 【SAVE】
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Button</title>
+  <title>Design</title>
   <style>
-    body { display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
-    button { padding: 12px 24px; background: var(--primary, #D97757); color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }
-    button:hover { opacity: 0.8; }
+    /* CSS here */
   </style>
 </head>
 <body>
-  <button>Click Me</button>
-</body>
-</html>
-【/SAVE】
-
-EXAMPLE 2 - Card Component:
-【SAVE】
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Card</title>
-  <style>
-    body { background: #f5f5f5; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; font-family: system-ui; }
-    .card { background: white; border-radius: 12px; padding: 24px; max-width: 300px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    h2 { color: var(--primary, #D97757); margin: 0 0 12px 0; }
-    p { color: #666; margin: 0; }
-  </style>
-</head>
-<body>
-  <div class="card">
-    <h2>Card Title</h2>
-    <p>This is a card component with customizable colors.</p>
-  </div>
+  <!-- Content here -->
 </body>
 </html>
 【/SAVE】
@@ -119,14 +88,6 @@ DESIGN PRINCIPLES:
 - Use CSS variables for colors: var(--primary, #D97757)
 - Performance optimized
 - Smooth animations (60fps)
-
-WHEN TO USE 【SAVE】 TAGS:
-【SAVE】
-<!DOCTYPE html>
-<html>
-...complete, standalone HTML file...
-</html>
-【/SAVE】
 
 NEVER OUTPUT:
 - CSS-only snippets (must be in HTML <style> tags)
@@ -505,9 +466,9 @@ app.post('/api/chat', async (req, res) => {
     console.log('   Total history messages:', conversations[conversationId].length);
     console.log('   Messages to send:', messages.length, `(last 4 of ${conversations[conversationId].length})`);
 
-    // Call DeepSeek via OpenRouter (very conservative to preserve low credits)
+    // Call DeepSeek via OpenRouter
     console.log(`🌐 [${conversationId}] Sending to OpenRouter...`);
-    const response = await chat({ messages, max_tokens: 250 });
+    const response = await chat({ messages, max_tokens: 300 });
 
     console.log(`✅ [${conversationId}] Received response (${response?.length || 0} chars)`);
     console.log(`   Response preview: ${(response || '').substring(0, 100)}...`);
