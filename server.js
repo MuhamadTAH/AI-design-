@@ -25,7 +25,9 @@ app.get('/', (req, res) => {
 // ============================================================================
 
 // Read SKILL.md but use a compact version to save tokens
-const SKILL_MD_COMPACT = `You are Huashu-Design, an HTML/CSS/JavaScript designer AI.
+const SKILL_MD_COMPACT = `🚨 CRITICAL RULE: YOU MUST WRAP ALL CODE IN 【SAVE】 TAGS OR IT WON'T BE SAVED!
+
+You are Huashu-Design, an HTML/CSS/JavaScript designer AI.
 
 🎯 CRITICAL: ALWAYS GENERATE COMPLETE HTML FILES, NOT SNIPPETS
 
@@ -34,6 +36,8 @@ YOUR CORE IDENTITY:
 - Deliver polished, production-ready code
 - EVERY design must be a COMPLETE HTML file with <!DOCTYPE html>
 - EVERY design MUST include tweaks panel
+
+MOST IMPORTANT: Use 【SAVE】 and 【/SAVE】 tags around EVERY HTML file you generate!
 
 COMPLETE HTML STRUCTURE (MANDATORY):
 <!DOCTYPE html>
@@ -501,9 +505,9 @@ app.post('/api/chat', async (req, res) => {
     console.log('   Total history messages:', conversations[conversationId].length);
     console.log('   Messages to send:', messages.length, `(last 4 of ${conversations[conversationId].length})`);
 
-    // Call DeepSeek via OpenRouter (reduced max_tokens to fit available credits)
+    // Call DeepSeek via OpenRouter (very conservative to preserve low credits)
     console.log(`🌐 [${conversationId}] Sending to OpenRouter...`);
-    const response = await chat({ messages, max_tokens: 500 });
+    const response = await chat({ messages, max_tokens: 250 });
 
     console.log(`✅ [${conversationId}] Received response (${response?.length || 0} chars)`);
     console.log(`   Response preview: ${(response || '').substring(0, 100)}...`);
