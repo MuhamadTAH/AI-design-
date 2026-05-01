@@ -1,0 +1,84 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Message</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --text: #2b2d42;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f8f9fa;
+            color: var(--text);
+        }
+        
+        .welcome-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            max-width: 400px;
+            text-align: center;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin: 0 0 1rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        p {
+            line-height: 1.6;
+            margin: 0 0 1.5rem;
+            color: #6c757d;
+        }
+        
+        .emoji {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: wave 2s infinite;
+            transform-origin: 70% 70%;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            20% { transform: rotate(-10deg); }
+            40% { transform: rotate(12deg); }
+            60% { transform: rotate(-8deg); }
+            80% { transform: rotate(6deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-card">
+        <div class="emoji">👋</div>
+        <h1>Hello There!</h1>
+        <p>Welcome to our digital space. We're excited to have you here and look forward to creating something amazing together.</p>
+    </div>
+</body>
+</html>
+```

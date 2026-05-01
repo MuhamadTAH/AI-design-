@@ -501,9 +501,9 @@ app.post('/api/chat', async (req, res) => {
     console.log('   Total history messages:', conversations[conversationId].length);
     console.log('   Messages to send:', messages.length, `(last 4 of ${conversations[conversationId].length})`);
 
-    // Call DeepSeek via OpenRouter
+    // Call DeepSeek via OpenRouter (reduced max_tokens to fit available credits)
     console.log(`🌐 [${conversationId}] Sending to OpenRouter...`);
-    const response = await chat({ messages });
+    const response = await chat({ messages, max_tokens: 500 });
 
     console.log(`✅ [${conversationId}] Received response (${response?.length || 0} chars)`);
     console.log(`   Response preview: ${(response || '').substring(0, 100)}...`);
@@ -574,8 +574,15 @@ app.post('/api/chat', async (req, res) => {
     console.log(`✨ [${conversationId}] Response sent successfully\n`);
 
   } catch (error) {
-    console.error('❌ Chat error:', error);
+    console.error('❌ Chat error (FULL DETAILS):');
+    console.error('   Message:', error.message);
+    console.error('   Type:', error.constructor.name);
     console.error('   Stack:', error.stack);
+    console.error('   Full error:', JSON.stringify(error, null, 2));
+    if (error.response) {
+      console.error('   Response status:', error.response.status);
+      console.error('   Response data:', error.response.data);
+    }
     res.status(500).json({
       error: 'Failed to generate design',
       message: error.message

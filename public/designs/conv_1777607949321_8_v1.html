@@ -1,0 +1,110 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Landing Page</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f9;
+      color: #333;
+    }
+    header {
+      background: #6200ee;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    header p {
+      margin: 10px 0 0;
+      font-size: 1.2rem;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+    .cta-button {
+      display: inline-block;
+      padding: 15px 30px;
+      background: #6200ee;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      transition: background 0.3s;
+    }
+    .cta-button:hover {
+      background: #3700b3;
+    }
+    .features {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 50px;
+      flex-wrap: wrap;
+    }
+    .feature {
+      flex: 1;
+      max-width: 300px;
+      margin: 20px;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .feature h3 {
+      margin: 0 0 10px;
+      font-size: 1.5rem;
+    }
+    .feature p {
+      margin: 0;
+      font-size: 1rem;
+    }
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to Our Product</h1>
+    <p>The best solution for your needs</p>
+  </header>
+
+  <div class="container">
+    <a href="#features" class="cta-button">Learn More</a>
+
+    <div id="features" class="features">
+      <div class="feature">
+        <h3>Feature One</h3>
+        <p>Effortless integration with your workflow.</p>
+      </div>
+      <div class="feature">
+        <h3>Feature Two</h3>
+        <p>Advanced analytics for better decisions.</p>
+      </div>
+      <div class="feature">
+        <h3>Feature Three</h3>
+        <p>Secure and reliable, always.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2023 Your Company. All rights reserved.</p>
+  </footer>
+</body>
+</html>

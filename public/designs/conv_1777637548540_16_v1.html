@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InnovateTech - Modern Solutions</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --gray-800: #1e293b;
+            --gray-50: #f8fafc;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            line-height: 1.5;
+            color: var(--gray-800);
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .hero {
+            background: var(--gray-50);
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 800px;
+            margin: 0 auto;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-button {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(37, 99, 235, 0.3);
+        }
+        
+        .features {
+            padding: 4rem 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature {
+            padding: 2rem;
+            border-radius: 1rem;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .feature h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background: var(--gray-800);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="container">
+            <h1>Empowering Innovation</h1>
+            <p>Transform your business with our cutting-edge technology solutions designed for modern enterprises.</p>
+            <a href="#features" class="cta-button">Explore Features</a>
+        </div>
+    </section>
+    
+    <section id="features" class="features">
+        <div class="container">
+            <div class="feature">
+                <h3>Scalable Solutions</h3>
+                <p>Our platform grows with your business, ensuring seamless scalability.</p>
+            </div>
+            <div class="feature">
+                <h3>AI-Powered Insights</h3>
+                <p>Leverage advanced analytics and AI for data-driven decisions.</p>
+            </div>
+            <div class="feature">
+                <h3>Security First</h3>
+                <p>Enterprise-grade security protocols protect your valuable data.</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 InnovateTech. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

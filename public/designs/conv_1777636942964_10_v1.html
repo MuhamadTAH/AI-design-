@@ -1,0 +1,83 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card Component</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #f7f7f7;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .card {
+      width: 300px;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .card-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    
+    .card-content {
+      padding: 20px;
+    }
+    
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0 0 8px;
+      color: #1a1a1a;
+    }
+    
+    .card-description {
+      font-size: 0.875rem;
+      color: #666;
+      margin: 0 0 16px;
+      line-height: 1.5;
+    }
+    
+    .card-button {
+      display: inline-block;
+      padding: 8px 16px;
+      background: #007aff;
+      color: white;
+      text-decoration: none;
+      font-size: 0.875rem;
+      border-radius: 6px;
+      transition: background 0.2s ease;
+    }
+    
+    .card-button:hover {
+      background: #0063cc;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img src="https://source.unsplash.com/300x180/?nature" alt="Nature" class="card-image">
+    <div class="card-content">
+      <h3 class="card-title">Explore Nature</h3>
+      <p class="card-description">Discover the beauty of natural landscapes and reconnect with the great outdoors.</p>
+      <a href="#" class="card-button">Learn More</a>
+    </div>
+  </div>
+</body>
+</html>

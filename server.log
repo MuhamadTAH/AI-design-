@@ -1,0 +1,17 @@
+ΓÜá∩╕Å  Port 3000 is in use, trying port 3001...
+
+ΓÜá∩╕Å  Port 3001 is in use, trying port 3002...
+
+
+Γ£¿ Chat Dashboard Server Running
+≡ƒôì http://localhost:3002
+
+≡ƒÄ» Features enabled:
+   Γ£à SKILL.md system prompt (Huashu-Design)
+   Γ£à File reading API (/api/files/read)
+   Γ£à Conversation history tracking
+   Γ£à Auto-save with πÇÉSAVEπÇæ tags
+   Γ£à Version management (v1, v2, v3...)
+
+Open your browser: http://localhost:3002
+
