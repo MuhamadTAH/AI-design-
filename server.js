@@ -27,40 +27,110 @@ app.get('/', (req, res) => {
 // Read SKILL.md but use a compact version to save tokens
 const SKILL_MD_COMPACT = `You are Huashu-Design, an HTML/CSS/JavaScript designer AI.
 
+🎯 CRITICAL: ALWAYS GENERATE COMPLETE HTML FILES, NOT SNIPPETS
+
 YOUR CORE IDENTITY:
 - Expert in high-fidelity HTML prototypes, interactive demos, animations, and design systems
-- Think like a designer, not a programmer
 - Deliver polished, production-ready code
-- Always verify facts against existing context
+- EVERY design must be a COMPLETE HTML file with <!DOCTYPE html>
+- EVERY design MUST include tweaks panel
+
+COMPLETE HTML STRUCTURE (MANDATORY):
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Design</title>
+  <style>
+    /\\* Your CSS here *\\*/
+  </style>
+</head>
+<body>
+  <!-- Your HTML content here -->
+  <script>
+    // Your JavaScript here
+  </script>
+</body>
+</html>
 
 YOUR WORKFLOW:
-1. Understand the user's request
-2. Check if you need reference files (animation guidelines, brand specs, etc.)
-3. Call read_reference() if needed
-4. Generate HTML/CSS/JavaScript (clean, modern, no bloat)
-5. Wrap final code in 【SAVE】 tags for auto-saving
-6. Examples shown inline (no tags) - they're not saved
+1. User requests design
+2. Create COMPLETE standalone HTML file (not snippets)
+3. Include tweaks panel in <body> before </body>
+4. Use CSS variables: --primary, --font-size, --dark
+5. Wrap in 【SAVE】 tags
+
+⚡ TWEAKS PANEL (AUTOMATIC INJECTION):
+The system will auto-inject tweaks if you generate complete HTML.
+If tweaks don't appear, it means your code wasn't complete HTML.
+
+EXAMPLES OF CORRECT DESIGNS:
+
+EXAMPLE 1 - Button Component:
+【SAVE】
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Button</title>
+  <style>
+    body { display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+    button { padding: 12px 24px; background: var(--primary, #D97757); color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }
+    button:hover { opacity: 0.8; }
+  </style>
+</head>
+<body>
+  <button>Click Me</button>
+</body>
+</html>
+【/SAVE】
+
+EXAMPLE 2 - Card Component:
+【SAVE】
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Card</title>
+  <style>
+    body { background: #f5f5f5; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; font-family: system-ui; }
+    .card { background: white; border-radius: 12px; padding: 24px; max-width: 300px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    h2 { color: var(--primary, #D97757); margin: 0 0 12px 0; }
+    p { color: #666; margin: 0; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Card Title</h2>
+    <p>This is a card component with customizable colors.</p>
+  </div>
+</body>
+</html>
+【/SAVE】
 
 DESIGN PRINCIPLES:
 - Modern, minimalist aesthetic
-- Accessibility first (semantic HTML, ARIA labels)
 - Mobile responsive (flexbox, grid)
-- Performance optimized (no unnecessary scripts)
-- Smooth animations (60fps, GPU accelerated)
+- Use CSS variables for colors: var(--primary, #D97757)
+- Performance optimized
+- Smooth animations (60fps)
 
 WHEN TO USE 【SAVE】 TAGS:
 【SAVE】
 <!DOCTYPE html>
 <html>
-...final code...
+...complete, standalone HTML file...
 </html>
 【/SAVE】
 
-EXAMPLES (shown without tags, not saved):
-<!-- Just showing, not saving -->
-<div>example</div>
+⚠️ NEVER OUTPUT:
+- CSS-only snippets (must be in HTML <style> tags)
+- JavaScript-only snippets (must be in HTML <script> tags)
+- Partial HTML (must have <!DOCTYPE html> and complete structure)
+- Markdown code blocks (generate actual HTML files)
 
-BE CONCISE AND CLEAR IN RESPONSES.`;
+EVERY DESIGN IS A COMPLETE HTML FILE OR IT'S NOT A DESIGN.`;
 
 
 const TOOL_USE_INSTRUCTIONS = `
@@ -208,6 +278,101 @@ function detectLanguage(content) {
   if (content.includes('const ') && content.includes('{')) return 'js';
   if (content.includes('::') || content.includes('@media')) return 'css';
   return 'txt';
+}
+
+// Inject tweaks panel into HTML if not already present
+function injectTweaksPanel(html) {
+  // Skip if tweaks already included
+  if (html.includes('tweaksPanel')) {
+    console.log('   ℹ️  Tweaks already present, skipping injection');
+    return html;
+  }
+  
+  // Check if has </body>
+  if (!html.includes('</body>')) {
+    console.log('   ⚠️  No </body> tag found, cannot inject tweaks');
+    return html;
+  }
+  
+  console.log('   🔧 Injecting tweaks panel into HTML...');
+  
+  const tweaksCode = `
+<script>
+const TWEAKS = {
+  primaryColor: '#D97757',
+  fontSize: 16,
+  darkMode: false
+};
+
+const stored = localStorage.getItem('design-tweaks');
+const tweaks = stored ? {...TWEAKS, ...JSON.parse(stored)} : TWEAKS;
+
+const root = document.documentElement;
+root.style.setProperty('--primary', tweaks.primaryColor);
+root.style.setProperty('--font-size', tweaks.fontSize + 'px');
+document.body.style.background = tweaks.darkMode ? '#0A0A0A' : '#FAFAFA';
+document.body.style.color = tweaks.darkMode ? '#FAFAFA' : '#1A1A1A';
+
+function updateTweak(key, value) {
+  tweaks[key] = value;
+  localStorage.setItem('design-tweaks', JSON.stringify(tweaks));
+  if (key === 'primaryColor') root.style.setProperty('--primary', value);
+  if (key === 'fontSize') root.style.setProperty('--font-size', value + 'px');
+  if (key === 'darkMode') {
+    document.body.style.background = value ? '#0A0A0A' : '#FAFAFA';
+    document.body.style.color = value ? '#FAFAFA' : '#1A1A1A';
+  }
+}
+</script>
+
+<!-- Tweaks Panel -->
+<div id="tweaksContainer" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; font-family: system-ui;">
+  <button id="tweaksToggle" style="background: #1A1A1A; color: white; border: none; border-radius: 50%; padding: 12px 16px; cursor: pointer; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">⚙ Tweaks</button>
+  <div id="tweaksPanel" style="display: none; background: white; border: 1px solid #e5e5e5; border-radius: 12px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.12); width: 280px; position: absolute; bottom: 60px; right: 0;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <strong style="font-size: 14px;">Tweaks</strong>
+      <button id="closeBtn" style="border: none; background: none; cursor: pointer; font-size: 16px; padding: 0; width: 20px; height: 20px;">×</button>
+    </div>
+    <label style="display: block; margin-bottom: 12px;">
+      <div style="margin-bottom: 4px; color: #666; font-size: 12px;">Primary Color</div>
+      <input type="color" id="colorInput" value="#D97757" style="width: 100%; height: 32px; border: 1px solid #e5e5e5; border-radius: 6px; cursor: pointer;" />
+    </label>
+    <label style="display: block; margin-bottom: 12px;">
+      <div style="margin-bottom: 4px; color: #666; font-size: 12px;">Font Size (<span id="sizeDisplay">16</span>px)</div>
+      <input type="range" id="sizeInput" min="12" max="24" step="1" value="16" style="width: 100%; cursor: pointer;" />
+    </label>
+    <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
+      <input type="checkbox" id="darkInput" style="cursor: pointer;" />
+      <span style="font-size: 13px;">Dark Mode</span>
+    </label>
+    <button id="resetBtn" style="width: 100%; padding: 8px 12px; background: #f5f5f5; border: none; border-radius: 6px; cursor: pointer; font-size: 12px;">Reset</button>
+  </div>
+</div>
+
+<script>
+document.getElementById('tweaksToggle').onclick = () => {
+  document.getElementById('tweaksPanel').style.display = 'block';
+};
+document.getElementById('closeBtn').onclick = () => {
+  document.getElementById('tweaksPanel').style.display = 'none';
+};
+document.getElementById('colorInput').onchange = (e) => updateTweak('primaryColor', e.target.value);
+document.getElementById('sizeInput').oninput = (e) => {
+  updateTweak('fontSize', +e.target.value);
+  document.getElementById('sizeDisplay').textContent = e.target.value;
+};
+document.getElementById('darkInput').onchange = (e) => updateTweak('darkMode', e.target.checked);
+document.getElementById('resetBtn').onclick = () => {
+  localStorage.removeItem('design-tweaks');
+  location.reload();
+};
+</script>
+`;
+
+  // Inject before </body>
+  const modified = html.replace('</body>', tweaksCode + '\n</body>');
+  console.log('   ✅ Tweaks injected successfully');
+  return modified;
 }
 
 function parseSaveTags(content) {
@@ -364,9 +529,15 @@ app.post('/api/chat', async (req, res) => {
       
       const filePath = path.join(designsPath, fileName);
       
+      // Inject tweaks panel into HTML files
+      let fileContent = block.code;
+      if (ext === 'html') {
+        fileContent = injectTweaksPanel(fileContent);
+      }
+      
       // Write file
-      fs.writeFileSync(filePath, block.code, 'utf-8');
-      console.log(`   💾 Saved: ${fileName} (${block.code.length} bytes)`);
+      fs.writeFileSync(filePath, fileContent, 'utf-8');
+      console.log(`   💾 Saved: ${fileName} (${fileContent.length} bytes)`);
       
       // Track saved file
       const fileRecord = {
@@ -375,7 +546,7 @@ app.post('/api/chat', async (req, res) => {
         url: `/designs/${fileName}`,
         type: ext,
         timestamp: new Date().toISOString(),
-        size: block.code.length
+        size: fileContent.length
       };
       
       savedFiles[conversationId].push(fileRecord);
