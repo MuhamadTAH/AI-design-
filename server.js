@@ -372,7 +372,7 @@ app.post('/api/chat', async (req, res) => {
       const fileRecord = {
         version: version,
         filename: fileName,
-        url: `/public/designs/${fileName}`,
+        url: `/designs/${fileName}`,
         type: ext,
         timestamp: new Date().toISOString(),
         size: block.code.length
